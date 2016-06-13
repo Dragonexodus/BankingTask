@@ -12,6 +12,7 @@ public class BankingServiceTest {
     private static final double FIFTY = 50.0;
     private static final double TWENTY = 20.0;
     private static final double TEN = 10.0;
+    public static final double ZERO = 0.0;
 
     private Account one;
     private Account two;
@@ -29,6 +30,11 @@ public class BankingServiceTest {
         two = new Account(300.0);
         three = new Account(10.0);
         four = new Account(330.0);
+        five = new Account(ZERO);
+        six = new Account(ZERO);
+        seven = new Account(ZERO);
+        eight = new Account(ZERO);
+        richBoy = new Account(FIFTY);
     }
 
     @Test
@@ -45,7 +51,7 @@ public class BankingServiceTest {
         BankingService.handleRequests(Stream.of(new TransactionHolder(one, 110.0, two)
                 , new TransactionHolder(two, TEN, one)).collect(Collectors.toList()));
         Assert.assertArrayEquals(Stream.of(one, two).map(Account::getSaldo).toArray(),
-                new Double[]{0.0, 400.0});
+                new Double[]{ZERO, 400.0});
     }
 
     @Test
@@ -69,26 +75,20 @@ public class BankingServiceTest {
         ).collect(Collectors.toList());
         BankingService.handleRequests(oneList);
         Assert.assertArrayEquals(Stream.of(one, two, four).map(Account::getSaldo).toArray(),
-                new Double[]{100.0, 630.0, 0.0});
+                new Double[]{100.0, 630.0, ZERO});
     }
 
     @Test
     public void longerLoopTransactionsSucceeds() {
-        five = new Account(0.0);
-        six = new Account(0.0);
-        seven = new Account(0.0);
-        eight = new Account(0.0);
-        richBoy = new Account(50.0);
-
         List<TransactionHolder> transactions = Stream.of(
-                new TransactionHolder(five, 50.0, six),
-                new TransactionHolder(six, 50.0, seven),
-                new TransactionHolder(seven, 50.0, eight),
-                new TransactionHolder(eight, 50.0, richBoy),
-                new TransactionHolder(richBoy, 50.0, five)
+                new TransactionHolder(five, FIFTY, six),
+                new TransactionHolder(six, FIFTY, seven),
+                new TransactionHolder(seven, FIFTY, eight),
+                new TransactionHolder(eight, FIFTY, richBoy),
+                new TransactionHolder(richBoy, FIFTY, five)
         ).collect(Collectors.toList());
         BankingService.handleRequests(transactions);
         Assert.assertArrayEquals(Stream.of(five, six, seven, eight, richBoy).map(Account::getSaldo).toArray(),
-                new Double[]{0.0, 0.0, 0.0, 0.0, 50.0});
+                new Double[]{ZERO, ZERO, ZERO, ZERO, FIFTY});
     }
 }

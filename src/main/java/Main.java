@@ -4,25 +4,22 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    private static Account one;
-    private static Account two;
-    private static Account three;
-    private static Account four;
-    private static Account richBoy;
+    private static final double FIFTY = 50.0;
+    private static final double ZERO = 0.0;
 
     public static void main(String[] args) {
-        one = new Account(0.0);
-        two = new Account(0.0);
-        three = new Account(0.0);
-        four = new Account(0.0);
-        richBoy = new Account(50.0);
+        Account one = new Account(ZERO);
+        Account two = new Account(ZERO);
+        Account three = new Account(ZERO);
+        Account four = new Account(ZERO);
+        Account richBoy = new Account(FIFTY);
 
         List<TransactionHolder> transactions = Stream.of(
-                new TransactionHolder(one, 50.0, two),
-                new TransactionHolder(two, 50.0, three),
-                new TransactionHolder(three, 50.0, four),
-                new TransactionHolder(four, 50.0, richBoy),
-                new TransactionHolder(richBoy, 50.0, one)
+                new TransactionHolder(one, FIFTY, two),
+                new TransactionHolder(two, FIFTY, three),
+                new TransactionHolder(three, FIFTY, four),
+                new TransactionHolder(four, FIFTY, richBoy),
+                new TransactionHolder(richBoy, FIFTY, one)
         ).collect(Collectors.toList());
         BankingService.handleRequests(transactions);
 

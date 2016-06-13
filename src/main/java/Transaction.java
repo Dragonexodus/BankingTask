@@ -29,7 +29,7 @@ public class Transaction {
         }
     }
 
-    public boolean transact(Account source, Double k, Account target) {
+    boolean transact(Account source, Double k, Account target) {
         if (k < 0) {
             throw new IllegalArgumentException("Negative k:" + k + " in 'Überweisung'.");
         }
