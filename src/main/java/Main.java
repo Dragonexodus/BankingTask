@@ -25,5 +25,7 @@ public class Main {
                 new TransactionHolder(richBoy, 50.0, one)
         ).collect(Collectors.toList());
         BankingService.handleRequests(transactions);
+
+        transactions.stream().map(TransactionHolder::getOne).forEach(System.out::println);
     }
 }
