@@ -1,77 +1,29 @@
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-
-/**
- * Created by dragonexodus on 03.06.16.
- */
 public class Main {
-    static final int MAX_SIZE = 1000;
-    static LinkedList<Integer> buffer;
-    static Lock l;
-    static Condition c;
 
-    public static void main(String[] args) throws InterruptedException {
+    private static Account one;
+    private static Account two;
+    private static Account three;
+    private static Account four;
+    private static Account richBoy;
 
-        buffer = new LinkedList<>();
+    public static void main(String[] args) {
+        one = new Account(0.0);
+        two = new Account(0.0);
+        three = new Account(0.0);
+        four = new Account(0.0);
+        richBoy = new Account(50.0);
 
-        l = new ReentrantLock();
-        c = l.newCondition();
-
-        Thread erz = new Thread(
-                () -> {
-                    while (true) {
-                        l.lock();
-                        try {
-                            while (buffer.size() >= MAX_SIZE) {
-                                c.await();
-                            }
-
-                            Random data = new Random();
-                            int value = data.nextInt();
-                            buffer.addLast(value);
-                            System.out.println(buffer.getLast() + "," + buffer.size());
-                            c.signalAll();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } finally {
-                            l.unlock();
-                        }
-                    }
-                }
-        );
-
-        Thread verb = new Thread(
-                () -> {
-                    {
-                        while (true) {
-                            l.lock();
-                            try {
-                                while (buffer.isEmpty()) {
-                                    c.await();
-                                }
-                                System.out.println(buffer.getFirst() + " : " + buffer.size());
-                                buffer.removeFirst();
-                                c.signalAll();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } finally {
-                                l.unlock();
-                            }
-
-                        }
-                    }
-                }
-        );
-
-        erz.start();
-        verb.start();
-        erz.join();
-        while (true) ;
-        //TODO: replace with read onto file
+        List<TransactionHolder> transactions = Stream.of(
+                new TransactionHolder(one, 50.0, two),
+                new TransactionHolder(two, 50.0, three),
+                new TransactionHolder(three, 50.0, four),
+                new TransactionHolder(four, 50.0, richBoy),
+                new TransactionHolder(richBoy, 50.0, one)
+        ).collect(Collectors.toList());
+        BankingService.handleRequests(transactions);
     }
-
 }
