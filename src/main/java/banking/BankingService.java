@@ -1,3 +1,7 @@
+package banking;
+
+import model.TransactionHolder;
+
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

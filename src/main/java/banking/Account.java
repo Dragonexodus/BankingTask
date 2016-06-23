@@ -1,3 +1,5 @@
+package banking;
+
 import java.util.Objects;
 
 public class Account {
@@ -28,7 +30,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" +
+        return "banking.Account{" +
                 "saldo=" + saldo +
                 '}';
     }

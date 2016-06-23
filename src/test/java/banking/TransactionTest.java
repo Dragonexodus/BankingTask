@@ -1,3 +1,5 @@
+package banking;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;

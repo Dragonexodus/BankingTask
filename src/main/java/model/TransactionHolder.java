@@ -1,4 +1,9 @@
+package model;
+
+import banking.Account;
+
 public class TransactionHolder {
+
     private final Account one;
     private final Double k;
     private final Account two;
@@ -23,7 +28,7 @@ public class TransactionHolder {
 
     @Override
     public String toString() {
-        return "TransactionHolder{" +
+        return "model.TransactionHolder{" +
                 "one=" + one +
                 ", k=" + k +
                 ", two=" + two +

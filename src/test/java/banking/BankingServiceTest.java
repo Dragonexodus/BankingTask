@@ -1,3 +1,6 @@
+package banking;
+
+import model.TransactionHolder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;

@@ -1,3 +1,7 @@
+package banking;
+
+import model.TransactionHolder;
+
 import java.util.logging.Logger;
 
 public class Transaction {
@@ -34,15 +38,12 @@ public class Transaction {
             throw new IllegalArgumentException("Negative k:" + k + " in 'Überweisung'.");
         }
         logger.info("transact with:" + source + "," + k + "," + target);
-        //System.out.println("transact with:"+source+","+k+","+target);
         drawOut(source, k);
         if (isValid) {
             deposit(target, k);
             logger.info("transact with:" + source + "," + k + "," + target + ", succeeds.");
-            //System.out.println("transact with:"+source+","+k+","+target+", succeeds.");
         } else {
             logger.info("transact with:" + source + "," + k + "," + target + ", fails.");
-            // System.out.println("transact with:"+source+","+k+","+target+", fails.");
         }
 
         return isValid;
